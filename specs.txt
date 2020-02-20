@@ -1,0 +1,8 @@
+Erf Approx - Different Methods
+1) erf(x) = 2 / (1+e^(-bx))-1
+2) erf(x) = tanh(bx) = (e^(bx)-e^(-bx))/(e^(bx)+e^(-bx))
+3) erf(x) = ((a+x)^m-(a-x)^m)/((a+x)^m+(a-x)^m)
+- For every a between 2 and 10 (step 0.25) find optimal m
+- An Ad hoc Approximation to the Gauss Error Function and a Correction Method (Beong In Yun)
+
+For these functions find the optimal quadratic error between 0 and 5 / 0 and a for No. 3.

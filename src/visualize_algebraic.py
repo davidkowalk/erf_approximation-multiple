@@ -1,0 +1,114 @@
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+import numpy as np
+
+#from matplotlib import cm
+#from matplotlib.ticker import LinearLocator, FormatStrFormatter
+
+from math import erf
+
+def main():
+
+    global dx
+    print("Starting")
+
+    pm = [] #m-achse
+
+    a_min = 2
+    a_max = 5
+
+    m_min = 2
+    m_max = 7
+
+    mesh_density = 0.05
+
+    dx = 0.1
+
+    print("Setting up")
+    X = np.arange(a_min, a_max, mesh_density)
+    Y = np.arange(m_min, m_max, mesh_density)
+    pa, pm = np.meshgrid(X, Y)
+
+    print(pa)
+    print(pm)
+    print(f"Size: {pa.shape}")
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    #Generate data
+    data = []
+
+    print("Generating Data")
+    marker_a = []
+    marker_m = []
+    smallest_error = []
+
+    for im in range(len(pa)):
+        smallest_error = 1
+        marker_a = 0
+        marker_m = 0
+        Z = []
+
+        for ia in range(len(pm[0])):
+            point = get_average_quadratic_error(pa[im][ia], pm[im][ia])
+            Z.append(point)
+
+            if point < smallest_error:
+                smalles_error = point
+                marker_a = pa[im][ia]
+                marker_m = pm[im][ia]
+
+
+        data.append(Z)
+        error_a.append(marker_a)
+        error_m.append(marker_m)
+        error_z.append(smalles_error)
+
+    print("Plotting Wireframe")
+    # Plot a basic wireframe.
+    data = np.array(data)
+    print(f"Size: {data.shape}")
+    ax.set_xlabel('a')
+    ax.set_ylabel('m')
+    ax.set_zlabel('Average Error')
+    ax.plot_wireframe(pa, pm, data, rstride=10, cstride=10)
+
+    print("Plotting Minima")
+    # Plot Minima
+    error_a = np.array(error_a)
+    error_m = np.array(error_m)
+    error_z = np.array(error_z)
+    ax.plot(error_a, error_m, error_z, label="Smallest Error", color="red")
+
+    plt.show()
+
+def approximation(a, m, x):
+    return ((a+x)**m-(a-x)**m)/((a+x)**m+(a-x)**m)
+
+def error(a, m, x):
+    return erf(x)-approximation(a, m, x)
+
+def quad_error(a, m, x):
+    err = error(a, m, x)
+    return err*err
+
+def integrate(func, a, m, start, end, dx):
+    summ = 0
+    point = start
+
+    while point < end:
+        func_value = func(a, m, point)
+        df = func(a, m, point+dx)-func_value
+        summ += func(a, m, point)*dx+0.5*dx*df
+
+        point += dx
+
+    return summ
+
+def get_average_quadratic_error(a, m):
+    return integrate(quad_error, a, m, 0, a-dx, dx)/a
+
+
+if __name__ == "__main__":
+    main()
