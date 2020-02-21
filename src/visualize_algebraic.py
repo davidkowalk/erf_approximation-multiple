@@ -20,7 +20,7 @@ def main():
     m_min = 2
     m_max = 7
 
-    mesh_density = 0.05
+    mesh_density = 0.03
 
     dx = 0.1
 
@@ -29,8 +29,6 @@ def main():
     Y = np.arange(m_min, m_max, mesh_density)
     pa, pm = np.meshgrid(X, Y)
 
-    print(pa)
-    print(pm)
     print(f"Size: {pa.shape}")
 
     fig = plt.figure()
@@ -38,32 +36,41 @@ def main():
 
     #Generate data
     data = []
+    error_a = []
+    error_m = []
+    error_z = []
 
     print("Generating Data")
-    marker_a = []
-    marker_m = []
-    smallest_error = []
 
     for im in range(len(pa)):
-        smallest_error = 1
-        marker_a = 0
-        marker_m = 0
         Z = []
 
         for ia in range(len(pm[0])):
             point = get_average_quadratic_error(pa[im][ia], pm[im][ia])
             Z.append(point)
 
-            if point < smallest_error:
-                smalles_error = point
+
+        data.append(Z)
+
+    print("Generating Smallest Error")
+
+    for ia in range(len(pm[0])):
+        smallest_error = 1
+        marker_a = 0
+        marker_m = 0
+
+        for im in range(len(pa)):
+            if data[im][ia] < smallest_error:
+                smallest_error = point
                 marker_a = pa[im][ia]
                 marker_m = pm[im][ia]
 
-
-        data.append(Z)
         error_a.append(marker_a)
         error_m.append(marker_m)
-        error_z.append(smalles_error)
+        error_z.append(smallest_error)
+
+
+
 
     print("Plotting Wireframe")
     # Plot a basic wireframe.
