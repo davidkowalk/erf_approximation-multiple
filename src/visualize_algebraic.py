@@ -1,6 +1,7 @@
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.colors import LogNorm
 
 #from matplotlib import cm
 #from matplotlib.ticker import LinearLocator, FormatStrFormatter
@@ -20,7 +21,7 @@ def main():
     m_min = 2
     m_max = 7
 
-    mesh_density = 0.1
+    mesh_density = 0.03
 
     dx = 0.1
 
@@ -104,7 +105,10 @@ def contour(pa, pm, data):
 
     #levels = [1e-5, 2e-5, 3e-5, 4e-5, 5e-5, 7e-5, 9e-5, 2e-4, 4e-4, 6e-4, 8e-4, 1e-3]
 
-    plt.contourf(pa, pm, data, vmax = 3e-5)
+    plt.pcolor(pa, pm, data, vmax=0.05, norm = LogNorm())
+    #plt.pcolor(pa, pm, data, vmax=0.01)
+    #plt.contourf(pa, pm, data)
+    plt.colorbar()
 
     plt.show()
 
