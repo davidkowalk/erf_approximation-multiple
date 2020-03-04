@@ -20,7 +20,7 @@ def main():
     m_min = 2
     m_max = 7
 
-    mesh_density = 0.03
+    mesh_density = 0.1
 
     dx = 0.1
 
