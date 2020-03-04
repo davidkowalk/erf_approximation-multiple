@@ -60,8 +60,11 @@ def main():
         marker_m = 0
 
         for im in range(len(pa)):
+
+            #print(f"{ia}/{im}/")
+
             if data[im][ia] < smallest_error:
-                smallest_error = point
+                smallest_error = data[im][ia]
                 marker_a = pa[im][ia]
                 marker_m = pm[im][ia]
 
@@ -72,14 +75,15 @@ def main():
 
 
 
-    print("Plotting Wireframe")
-    # Plot a basic wireframe.
-    data = np.array(data)
-    print(f"Size: {data.shape}")
     ax.set_xlabel('a')
     ax.set_ylabel('m')
     ax.set_zlabel('Average Error')
-    ax.plot_wireframe(pa, pm, data, rstride=10, cstride=10)
+
+    print("Plotting Wireframe")
+    #Plot a basic wireframe.
+    #data = np.array(data)
+    #print(f"Size: {data.shape}")
+    #ax.plot_wireframe(pa, pm, data, rstride=10, cstride=10)
 
     print("Plotting Minima")
     # Plot Minima
@@ -87,6 +91,20 @@ def main():
     error_m = np.array(error_m)
     error_z = np.array(error_z)
     ax.plot(error_a, error_m, error_z, label="Smallest Error", color="red")
+
+    plt.show()
+
+    contour(pa, pm, data)
+
+def contour(pa, pm, data):
+
+    print("Plotting Contour")
+    plt.xlabel("alpha")
+    plt.ylabel("m")
+
+    #levels = [1e-5, 2e-5, 3e-5, 4e-5, 5e-5, 7e-5, 9e-5, 2e-4, 4e-4, 6e-4, 8e-4, 1e-3]
+
+    plt.contourf(pa, pm, data, vmax = 3e-5)
 
     plt.show()
 
