@@ -21,7 +21,7 @@ def main():
     m_min = 2
     m_max = 7
 
-    mesh_density = 0.06
+    mesh_density = 0.01
 
     dx = 0.1
 
@@ -105,9 +105,14 @@ def contour(pa, pm, data):
 
     #levels = [1e-5, 2e-5, 3e-5, 4e-5, 5e-5, 7e-5, 9e-5, 2e-4, 4e-4, 6e-4, 8e-4, 1e-3]
 
-    #plt.pcolor(pa, pm, data, vmax=0.05, norm = LogNorm())
-    plt.pcolor(pa, pm, data, vmax=0.01)
-    #plt.contourf(pa, pm, data)
+    print("1) Linear Color Distribution\n2) Logarithmic Color Distribution")
+    mode = input("> ")
+
+    if mode == "1":
+        plt.pcolor(pa, pm, data, vmax=0.01)
+    else:
+        plt.pcolor(pa, pm, data, vmax=0.05, norm = LogNorm())
+
     plt.colorbar()
 
     plt.show()
