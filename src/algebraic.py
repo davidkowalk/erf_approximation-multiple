@@ -44,7 +44,6 @@ a = 2.2
 def approx(m, x):
     return ((a+x)**m-(a-x)**m)/((a+x)**m+(a-x)**m)
 
-
 def qerror(b, x):
     return engine.quad_error(approx, b, x)
 

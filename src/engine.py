@@ -18,7 +18,7 @@ def integrate(func, b, start, end, dx):
     while point < end:
         func_value = func(b, point)
         df = func(b, point+dx)-func_value
-        summ += func(b, point)*dx+0.5*dx*df
+        summ += func_value*dx+0.5*dx*df
 
         point += dx
 
