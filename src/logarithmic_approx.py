@@ -36,7 +36,7 @@ def find_min_error():
     gamma = 0.1 # Step size multiplier
     precision = 0.00000001 # Desired precision of result 0.0000001
     max_iters = 2000 #200000
-    dx = 0.0000001 # 0.0000001
+    dx = 0.0001 # 0.0000001
 
     b, data = engine.gradient_descend(average_quadratic_error, start, precision, gamma, max_iters, dx)
 
