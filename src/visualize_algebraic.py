@@ -32,9 +32,6 @@ def main():
 
     print(f"Size: {pa.shape}")
 
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-
     #Generate data
     data = []
     error_a = []
@@ -74,7 +71,23 @@ def main():
         error_z.append(smallest_error)
 
 
+    mode = None
+    print("--DONE--")
 
+    while not mode == "4":
+        print("\n1) Linear Heat Map\n2) Logarithmic Heat Map\n3) Wireframe\n4) Exit")
+        mode = input("> ")
+
+        if mode == "1" or mode == "2":
+            contour(pa, pm, data, mode)
+        elif mode == "3":
+            wireframe(pa, pm, data, error_a, error_m, error_z)
+        elif mode == "4":
+            exit()
+
+def wireframe(pa, pm, data, error_a, error_m, error_z):
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
 
     ax.set_xlabel('a')
     ax.set_ylabel('m')
@@ -95,18 +108,14 @@ def main():
 
     plt.show()
 
-    contour(pa, pm, data)
-
-def contour(pa, pm, data):
+def contour(pa, pm, data, mode):
 
     print("Plotting Contour")
     plt.xlabel("alpha")
     plt.ylabel("m")
+    plt.title("Average Error Between 0 and Alpha")
 
     #levels = [1e-5, 2e-5, 3e-5, 4e-5, 5e-5, 7e-5, 9e-5, 2e-4, 4e-4, 6e-4, 8e-4, 1e-3]
-
-    print("1) Linear Color Distribution\n2) Logarithmic Color Distribution")
-    mode = input("> ")
 
     if mode == "1":
         plt.pcolor(pa, pm, data, vmax=0.01)
